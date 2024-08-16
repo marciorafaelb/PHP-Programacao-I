@@ -1,4 +1,14 @@
-<?php require_once('inc/topo.php');?>
+<?php require_once('inc/topo.php');
+session_start();
+
+function verificarLogin() {
+   return isset($_SESSION['usuario-logado']) && $_SESSION['usuario-logado']===true; {
+      header('Location: http://localhost/ifc/trabalho/finalizar.php');
+      exit();
+   }
+}
+
+?>
       <div class="main_content">
          <div class="login_register_wrap section">
             <div class="container">

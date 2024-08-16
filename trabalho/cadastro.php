@@ -43,7 +43,7 @@
                                  </div>
                               </div>
                               <div class="form-group">
-                                 <button type="submit" class="btn btn-fill-out btn-block" name="register">Cadastre-se</button>
+                                 <button type="submit" class="btn btn-fill-out btn-block" name="register"><a href="http://localhost/ifc/trabalho/login.php">Cadastre-se</a></button>
                               </div>
                            </form>
                          </div>

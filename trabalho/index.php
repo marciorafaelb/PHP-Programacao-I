@@ -3,6 +3,7 @@
 session_start();
 $_SESSION['product-name']= 'Placa de Vídeo Asus Dual NVIDIA GeForce RTX 2070 EVO V2 OC Edition, 8GB, GDDR6';
 $_SESSION['product-price']= 'R$ 2.949,90';
+$productPriceNumeric = 2949.90;
 
 if (!isset($_SESSION['contador'])) {
    $_SESSION['contador'] = 1;
@@ -13,8 +14,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    if (isset($_POST['incrementar'])) {
        $_SESSION['contador']++; // Incrementa o contador
    } elseif (isset($_POST['decrementar'])) {
-       $_SESSION['contador']--; // Decrementa o contador
+       if ($_SESSION['contador'] > 1) {
+           $_SESSION['contador']--; // Decrementa o contador
+       }
    }
+}
+
+if(!$_SESSION['product-subtotal']){
+   $_SESSION['product-subtotal'] = $productPriceNumeric;
+}else{
+   $_SESSION['product-subtotal']= $_SESSION['contador'] * $productPriceNumeric;
 }
 
 ?>
@@ -52,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                        
                                     </div>
                                  </td>
-                                 <td class="product-subtotal" data-title="Total">R$ 2.949,90</td>
+                                 <td class="product-subtotal" data-title="Total">R$ <?=number_format($_SESSION['product-subtotal'],2,'.',',')?></td>
                                  <td class="product-remove qtde" tipo="remove" id_produto="5" data-title="Remove"><a href="#">X</a></td>
                               </tr>
                            </tbody>
