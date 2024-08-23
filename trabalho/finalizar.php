@@ -1,8 +1,32 @@
-<?php require_once('inc/topo.php');?>
+<?php require_once('inc/topo.php');
+session_start();
+
+error_reporting(0);
+
+if (isset($_GET['a']) && $_GET['a'] == 1 && $_SERVER['REQUEST_METHOD'] == 'POST') {
+   // Aqui você pode processar os dados do formulário se necessário
+   // ...
+
+   // Definir uma mensagem de sucesso
+   $_SESSION['mensagem_sucesso'] = 'Compra finalizada com sucesso!';
+
+   // Redirecionar para a mesma página para exibir a mensagem de sucesso
+   header('Location: ' . $_SERVER['PHP_SELF']);
+   exit();
+}
+?>
       <div class="main_content">
          <!-- START SECTION SHOP -->
          <div class="section">
             <div class="container">
+            <?php
+            // Mostrar mensagem de sucesso, se existir
+            if (isset($_SESSION['mensagem_sucesso'])) {
+                echo '<div class="alert alert-success">' . $_SESSION['mensagem_sucesso'] . '</div>';
+                // Limpar a mensagem após exibí-la
+                unset($_SESSION['mensagem_sucesso']);
+            }
+            ?>
                <form action="?a=1" method="post" name="form" enctype="multipart/form-data">
                  <div class="row">
                      <div class="col-md-6">
@@ -101,8 +125,8 @@
                                  </thead>
                                  <tbody>
                                     <tr>
-                                       <td class="product-name" data-title="Product"><a href="">Placa de Vídeo Asus Dual NVIDIA GeForce RTX 2070 EVO V2 OC Edition, 8GB, GDDR6 <strong> x 1</strong></a></td>
-                                       <td class="product-subtotal" data-title="Total">2.949,90</td>
+                                       <td class="product-name" data-title="Product"><a href=""><?=$_SESSION['product-name']?> <strong> x 1</strong></a></td>
+                                       <td class="product-subtotal" data-title="Total">R$ <?=number_format($_SESSION['product-subtotal'], 2, '.', ',')?></td>
                                     </tr>
                                  </tbody>
                               </table>

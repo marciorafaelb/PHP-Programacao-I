@@ -3,9 +3,29 @@ session_start();
 
 function verificarLogin() {
    return isset($_SESSION['usuario-logado']) && $_SESSION['usuario-logado']===true; {
-      header('Location: http://localhost/ifc/trabalho/finalizar.php');
+      header('Location: finalizar.php');
       exit();
    }
+}
+
+verificarLogin();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
+    $email = $_POST['email_cliente'];
+    $senha = $_POST['cliente_senha'];
+
+    if (isset($_SESSION['usuarios'][$email])) {
+        $usuario = $_SESSION['usuarios'][$email];
+        if (password_verify($senha, $usuario['senha'])) {
+            $_SESSION['usuario-logado'] = true;
+            header('Location: finalizar.php');
+            exit();
+        } else {
+            $erro = 'Senha incorreta!';
+        }
+    } else {
+        $erro = 'Usuário não encontrado!';
+    }
 }
 
 ?>

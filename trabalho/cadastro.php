@@ -1,4 +1,32 @@
-<?php require_once('inc/topo.php');?>
+<?php require_once('inc/topo.php');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
+   // Obtenha os dados do formulário
+   $nome = $_POST['nome_cliente'];
+   $sobrenome = $_POST['sobrenome_cliente'];
+   $cpf = $_POST['cpf_cliente'];
+   $fone = $_POST['fone_cliente'];
+   $whats = $_POST['whats_cliente'];
+   $email = $_POST['email_cliente'];
+   $senha = password_hash($_POST['cliente_senha'], PASSWORD_DEFAULT); // Hash da senha
+
+   // Armazenar os dados na sessão
+   $_SESSION['usuarios'] = $_SESSION['usuarios'] ?? [];
+   $_SESSION['usuarios'][$email] = [
+       'nome' => $nome,
+       'sobrenome' => $sobrenome,
+       'cpf' => $cpf,
+       'fone' => $fone,
+       'whats' => $whats,
+       'senha' => $senha
+   ];
+
+   // Redirecionar após o cadastro
+   header('Location: login.php');
+   exit();
+}
+
+?>
       <div class="main_content">
          <div class="login_register_wrap section">
             <div class="container">
